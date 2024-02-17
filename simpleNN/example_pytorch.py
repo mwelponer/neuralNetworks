@@ -5,6 +5,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
+import matplotlib.pyplot as plt
+
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 
@@ -52,18 +54,53 @@ optimizer = optim.Adam(model.parameters(), lr=0.01) # Adam
 
 
 ############### TRAIN THE NEURAL NETWORK
+# Lists to store accuracy and loss values
+loss_values = []
+accuracy_values = []
+
 for epoch in range(EPOCH_NUMBER):
     # Forward pass
     outputs = model(x)
     loss = criterion(outputs, y)
+
+    # Compute accuracy
+    predicted = torch.round(outputs)
+    accuracy = (predicted == y).sum().item() / len(y)
 
     # Backward pass and optimization
     optimizer.zero_grad() # Resets the gradients of all optimized
     loss.backward() # apply loss function
     optimizer.step() # update weights  
 
+    # Append accuracy and loss values
+    loss_values.append(loss.item())
+    accuracy_values.append(accuracy)
+
     if (epoch+1) % (EPOCH_NUMBER/10) == 0:
         print(f'Epoch [{epoch+1}/{EPOCH_NUMBER}], Loss: {loss.item():.4f}')
+
+
+############### PLOT ACCURACY AND LOSS
+plt.figure(figsize=(10, 5))
+
+# Plot loss
+plt.subplot(1, 2, 1)
+plt.plot(range(1, EPOCH_NUMBER + 1), loss_values, label='Loss', color='blue')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Training Loss')
+plt.legend()
+
+# Plot accuracy
+plt.subplot(1, 2, 2)
+plt.plot(range(1, EPOCH_NUMBER + 1), accuracy_values, label='Accuracy', color='red')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.title('Training Accuracy')
+plt.legend()
+
+plt.tight_layout()
+plt.show()
 
 
 ############### PREDICT ON TRAINING DATA

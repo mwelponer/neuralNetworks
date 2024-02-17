@@ -8,6 +8,8 @@ from keras.optimizers import Adam
 import numpy as np
 import matplotlib.pyplot as plt
 
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+
 
 import keras, tensorflow
 print(f"keras version: {keras.__version__}")
@@ -37,9 +39,14 @@ model = Sequential([
 model.compile(optimizer=Adam(lr=0.001), loss='binary_crossentropy', metrics=['accuracy'])
 
 
-############### TRAIN THE MODEL
-history = model.fit(x, y, batch_size=20, epochs=EPOCH_NUMBER, shuffle=True) # use all samples for training
-#history = model.fit(x, y, batch_size=20, validation_split=.10, epochs=EPOCH_NUMBER, shuffle=True) # use 10% as validation
+############### TRAIN THE MODEL: TWO OPTIONS
+# 1. use all samples for training, i.e. no validation.
+# Prediction is done just on training data, at the end of each epoch
+history = model.fit(x, y, batch_size=20, epochs=EPOCH_NUMBER, shuffle=True)
+
+# 2. validation_split uses 10% as validation, i.e. predict on training 
+# data (loss/accuracy) and on validation set (valLoss/valAccuracy)
+#history = model.fit(x, y, batch_size=20, validation_split=.10, epochs=EPOCH_NUMBER, shuffle=True) 
 
 
 ############### PLOT ACCURACY AND LOSS
@@ -66,6 +73,27 @@ plt.legend()
 
 plt.show() 
 
+
+############### PREDICT (AGAIN ALL IN ONE TIME) ON TRAINING DATA
+# True labels
+y_true = y
+# Predicted labels
+y_pred = np.round(model.predict(x)).astype(int)
+# Compute evaluation metrics
+accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true, y_pred)
+recall = recall_score(y_true, y_pred)
+f1 = f1_score(y_true, y_pred)
+print("\nAccuracy:", accuracy) # model correctness
+print("Precision:", precision) # ability to avoid false positives
+print("Recall:", recall) # ability to predict true positives
+print("F1 Score:", f1) # harmonic mean of precision and recall
+# confusion matrix is made like this
+# [ [true positives, false positives],
+#   [false negatives, true negatives] ]
+conf_matrix = confusion_matrix(y_true, y_pred)
+print("Confusion Matrix:")
+print(conf_matrix)
 
 
 ############### PREDICT ON TEST SET

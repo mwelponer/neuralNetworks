@@ -1,5 +1,5 @@
-# pip install --upgrade keras
 # pip install tensorflow
+# pip install -U scikit-learn
 
 from keras.models import Sequential
 from keras.layers import Dense

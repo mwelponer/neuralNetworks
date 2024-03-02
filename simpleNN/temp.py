@@ -3,12 +3,8 @@
 # import matplotlib.pyplot as plt
 
 
-#print( [n for n in range(1, 101)] )
 
-#print( [n**2 for n in range(1, 101)] )
-
-print( [n**2 for n in range(1, 101) if n**2 % 3 == 0] )
-
+# print( [n**2 for n in range(1, 101) if n**2 % 3 == 0] )
 
 # def parse(filePath):
 #     with open(filePath) as fp:
@@ -25,8 +21,6 @@ print( [n**2 for n in range(1, 101) if n**2 % 3 == 0] )
 # res = parse('data.csv')
 # print(res)
 
-
-
 # class Point:
 #     def __init__(self, x, y):
 #         self.x = x
@@ -37,17 +31,11 @@ print( [n**2 for n in range(1, 101) if n**2 % 3 == 0] )
     
 # p1 = Point(2, 3)
 # print(p1)
-        
-
 
 # # list of points with random coordinates
-
 # import random
 
 # points = []
 # for _ in range(100):
 #     x, y = random.uniform(1,10), random.uniform(1,10) 
 #     points.append(Point(x, y))
-
-
-

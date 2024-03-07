@@ -10,7 +10,7 @@ from utils import utils
 
 
 NUM_TRAINING_SAMPLES = 750
-NOISE_STD = 2.5
+NOISE_STD = 1.5
 TESTING_PERCENTAGE = .30
 NUM_EPOCHS = 50 # 50
 LEARNING_RATE = 0.001 # 0.001
@@ -82,7 +82,7 @@ y_test = scaler.inverse_transform(y_test)
 ###### Plot predicted vs true temperatures for the testing set
 plt.plot(y_test, label='True Temperatures')
 plt.plot(y_pred, label='Predicted Temperatures')
-plt.title('Predicted vs True Temperatures (LSTM)')
+plt.title(f'Testing set ({TESTING_PERCENTAGE*100:.0f}%) - Predicted vs True Temperatures (LSTM)')
 plt.xlabel('Sample')
 plt.ylabel('Temperature')
 plt.legend()

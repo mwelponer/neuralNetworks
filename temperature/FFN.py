@@ -10,10 +10,10 @@ from utils import utils
 
 
 NUM_TRAINING_SAMPLES = 750
-NOISE_STD = 3.5
+NOISE_STD = 1.5 #3.5
 TESTING_PERCENTAGE = .30
 NUM_EPOCHS = 50
-LEARNING_RATE = 0.001 # 0.001
+LEARNING_RATE = 0.001 #0.001
 
 
 ###### generate random temperatures
@@ -38,7 +38,7 @@ X_train, y_train, X_test, y_test = utils.splitTrainingData(X, y, \
 
 ###### define and compile a network model
 model = Sequential([
-    Dense(3, input_shape=(1,), activation='relu', kernel_initializer='glorot_uniform'), # Xavier init
+    Dense(6, input_shape=(1,), activation='relu', kernel_initializer='glorot_uniform'), # Xavier init
     Dense(1)
 ])
 model.compile(optimizer=Adam(learning_rate=LEARNING_RATE), loss='mean_squared_error', metrics=['mae'])
@@ -78,7 +78,7 @@ y_test = scaler.inverse_transform(y_test)
 ###### Plot predicted vs true temperatures for the testing set
 plt.plot(y_test, label='True Temperatures')
 plt.plot(y_pred, label='Predicted Temperatures')
-plt.title('Predicted vs True Temperatures (FFN)')
+plt.title(f'Testing set ({TESTING_PERCENTAGE*100:.0f}%) - Predicted vs True Temperatures (FFN)')
 plt.xlabel('Sample')
 plt.ylabel('Temperature')
 plt.legend()

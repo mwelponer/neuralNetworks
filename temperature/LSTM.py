@@ -5,16 +5,22 @@ from keras.optimizers import Adam
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
+from keras.callbacks import EarlyStopping
+
 
 from utils import utils
 
 
 NUM_TRAINING_SAMPLES = 750
 NOISE_STD = 1.5
+
 TESTING_PERCENTAGE = .30
-NUM_EPOCHS = 50 # 50
+NUM_EPOCHS = 50 # comment line to use early stopping 
+# note: the bigger the less it follows the noise, sort of de-noise of 
+# the noised sinusoidal signal. Phase improoves
 LEARNING_RATE = 0.001 # 0.001
-TIME_STEPS = 3
+TIME_STEPS = 3 # note: the greater the better according to the phase, 
+# but decreases the precision on the noise/outlayers prediction 
 
 
 ###### generate random temperatures
@@ -42,9 +48,16 @@ X_train, y_train, X_test, y_test = utils.splitTrainingData(X, y, \
 ###### define and compile a network model
 model = Sequential()
 model.add(LSTM(3, input_shape=(TIME_STEPS, 1)))
-model.add(Dense(1))
+model.add(Dense(1)) # no activation function specified means linear activation func.
 # compile the model
 model.compile(optimizer=Adam(learning_rate=LEARNING_RATE), loss='mse', metrics=['mae'])
+
+###### Define if to use early stopping and criteria
+try:
+    if not NUM_EPOCHS: pass
+except NameError:
+    NUM_EPOCHS = 1_000_000
+    early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
 
 ###### train the model
 #history = model.fit(samples, labels, epochs=100, batch_size=1)

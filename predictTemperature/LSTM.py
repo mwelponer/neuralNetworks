@@ -10,7 +10,6 @@ from keras.callbacks import EarlyStopping
 
 from utils import utils
 
-
 NUM_TRAINING_SAMPLES = 750
 NOISE_STD = 1.5
 

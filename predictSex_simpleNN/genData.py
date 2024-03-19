@@ -4,9 +4,9 @@ import random
 samples = []
 labels = []
 for _ in range(10000):
-    height = random.uniform(150, 190)
-    weight = random.uniform(45, 90)
-    footsize = random.uniform(34, 46)
+    height = random.gauss(150, 190)
+    weight = random.gauss(45, 90)
+    footsize = random.gauss(34, 46)
     samples.append([height, weight, footsize])
     # Assuming a simple heuristic where 
     # weight > 60 & height > 165 and foot > 40 corresponds to male (1), 

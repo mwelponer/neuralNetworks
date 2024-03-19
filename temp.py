@@ -3,6 +3,24 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import random
 import math
+import threading
+
+def powOfTwo(n=0):
+  i = 0
+  while i < n:
+    yield 2**i
+    i += 1
+
+a = [i for i in powOfTwo(6)]
+print(a)
+
+def printN():
+  for i in range(5):
+    print(i)
+
+thread = threading.Thread(target=printN())
+thread.start()
+
 
 
 

@@ -15,12 +15,11 @@ NOISE_STD = 1.5
 
 TESTING_PERCENTAGE = .30
 NUM_EPOCHS = 50 # comment line to use early stopping 
-# note: the bigger the less it follows the noise, sort of de-noise of 
+# note about epochs: the bigger the less it follows the noise, sort of de-noise of 
 # the noised sinusoidal signal. Phase improoves
 LEARNING_RATE = 0.001 # 0.001
-TIME_STEPS = 3 # note: the greater the better according to the phase, 
+TIME_STEPS = 3 # note about time steps: the greater the better according to the phase, 
 # but decreases the precision on the noise/outlayers prediction 
-
 
 ###### generate random temperatures
 temperature = utils.genSinTemperatures(num_samples=NUM_TRAINING_SAMPLES, \
@@ -33,7 +32,7 @@ temperature = temperature.reshape(-1, 1) # reshape to n rows, 1 column
 temperature = scaler.fit_transform(temperature)
 
 ###### prepare data for LSTM
-# # sample x = actual day, label y = next day
+## time step 1: sample x is actual day, label y is next day
 # samples = temperature[0:-1] # from 0 to n-1
 # labels = temperature[1:] # from 1 to n
 X, y = utils.prepareLSTN_Data(temperature, Nsteps=TIME_STEPS)
